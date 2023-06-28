@@ -160,14 +160,14 @@ class DBTCloud:
             return self._environment_variable_cache[job_id]
 
         self._check_for_creds()
-
+        logger.info(f"Getting env vars for the job {job_id}")
         response = requests.get(
             url=(
                 f"{self.base_url}/api/v3/accounts/{self.account_id}/projects/{project_id}/environment-variables/job/?job_definition_id={job_id}"
             ),
             headers=self._headers,
         )
-
+        logger.info(f"Response for the job is {response}")
         variables = {
             name: CustomEnvironmentVariablePayload(
                 id=variable_data.get("job", {}).get("id"),
