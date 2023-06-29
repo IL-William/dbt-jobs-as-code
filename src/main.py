@@ -35,7 +35,16 @@ def build_change_set(config):
         base_url=os.environ.get("DBT_BASE_URL", "https://cloud.getdbt.com"),
     )
     cloud_jobs = dbt_cloud.get_jobs()
+    print(f'🚀 defined_jobs are {defined_jobs}\n\n')
+    print(f'Cloud jobs are\n')
+    for job in cloud_jobs:
+        print(f'project_id: {job.project_id} | identifier {job.identifier}, name {job.name} | id {job.id}')
+
     tracked_jobs = {job.identifier: job for job in cloud_jobs if job.identifier is not None}
+    print(f'\n\n')
+    print(f'🚨 Tracked jobs are\n')
+    for job in tracked_jobs.keys():
+        print(f'project_id: {tracked_jobs[job].project_id} | identifier {tracked_jobs[job].identifier}, name {tracked_jobs[job].name} | id {tracked_jobs[job].id}')
 
     dbt_cloud_change_set = ChangeSet()
 
